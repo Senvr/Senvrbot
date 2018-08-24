@@ -1,42 +1,67 @@
+import discord
+from tinytag import TinyTag
 from discord.ext import commands
+from discord.ext.commands import Bot
+from discord.voice_client import VoiceClient
+import asyncio
+import os
+import re
+import datetime
+import random
 prefix = "$"
+import asyncio
+
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.Dl_qLA.gCntc6usxG_2jrB14urC4kgu26I'
-bot.run(TOKEN)  # Where 'TOKEN' is your bot token
+TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.DmA49A.-7wd0vV-wUN2fwBn7IfyioM_cKs'
+  # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
+@bot.command()
+async def ping():
+	await bot.say("reply")
+
+@bot.command(pass_context=True)
+async def quoteadd(ctx):
+	f = open("quotes.txt","a")
+	MSG = ctx.message.content.replace('$quoteadd ','')
+	print(MSG)
+	if len(MSG) < 32 and len(MSG) > 2:
+			regex = re.compile('[^a-zA-Z0-9 ]')
+			quote = regex.sub('', MSG.strip(',.').lower())
+			f.write(format('*'+quote+'*'+'\n'))
+			await bot.say("added, thanks for contribution")
+	else:
+		bot.say("There was an error adding your message. Try reducing its length.")
+	f.close()
 
 @bot.command()
-async def add(ctx, a: int, b: int):
-    await ctx.send(a+b)
-
-@bot.command()
-async def multiply(ctx, a: int, b: int):
-    await ctx.send(a*b)
-
-@bot.command()
-async def greet(ctx):
-    await ctx.send(":smiley: :wave: Hello, there!")
-
-@bot.command()
-async def cat(ctx):
-    await ctx.send("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif")
-
-@bot.command()
-async def info(ctx):
-    embed = discord.Embed(title="nice bot", description="Nicest bot there is ever.", color=0xeee657)
-    
-    # give info about you here
-    embed.add_field(name="Author", value="<YOUR-USERNAME>")
-    
+async def quote():
+	quote=random.choice(list(open('quotes.txt')))
+	await bot.say(quote)
+	print(quote)
 
 
-    # give users a link to invite thsi bot to their server
-    embed.add_field(name="Invite", value="[Invite link](<insert your OAuth invitation link here>)")
-
-    await ctx.send(embed=embed)
-
+@bot.command(pass_context=True)
+async def play(ctx):
+	audio="audio/"+random.choice(os.listdir("audio/"))
+	bot.say(audio)
+	Author = ctx.message.author
+	Channel = Author.voice_channel
+	voice = await bot.join_voice_channel(Channel)
+	player = voice.create_ffmpeg_player(audio)
+	player.start()
+	tag = TinyTag.get(audio)
+	duration=tag.duration
+	print(duration)
+	if duration > 30:
+		await asyncio.sleep(15)
+		await bot.say("DURATION IS LONG."+duration)
+		await voice.disconnect()
+	await asyncio.sleep(duration)
+	await voice.disconnect()
+	
+bot.run(TOKEN)
