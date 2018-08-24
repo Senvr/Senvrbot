@@ -12,7 +12,7 @@ prefix = "$"
 import asyncio
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.DmA49A.-7wd0vV-wUN2fwBn7IfyioM_cKs'
+TOKEN = ''
   # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
