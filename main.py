@@ -58,4 +58,9 @@ async def play(ctx):
 	await asyncio.sleep(duration)
 	await voice.disconnect()
 	
+async def on_message(msg):
+	if(msg.lower().contains("nigger")):
+		bot.say("HEY NIGGER, THIS IS A MOTHERFUCKING SAFE SPACE")
+	
+bot.add_listener(on_message, "on_message")
 bot.run(TOKEN)
