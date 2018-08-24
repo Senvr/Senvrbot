@@ -6,14 +6,15 @@ from discord.voice_client import VoiceClient
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = ''
+TOKEN = 'XXXXXXX'
   # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
-    print('Logged in as')
-    print(bot.user.name)
-    print(bot.user.id)
-    print('------')
+	print('Logged in as')
+	print(bot.user.name)
+	print(bot.user.id)
+	print('------')
+	await bot.change_presence(game=discord.Game(name='you suck'))
 @bot.command()
 async def ping():
 	await bot.say("reply")
@@ -22,14 +23,17 @@ async def ping():
 async def quoteadd(ctx):
 	f = open("quotes.txt","a")
 	MSG = ctx.message.content.replace('$quoteadd ','')
-	print(MSG)
+	print(len(MSG))
 	if len(MSG) < 32 and len(MSG) > 2:
-			regex = re.compile('[^a-zA-Z0-9 ]')
-			quote = regex.sub('', MSG.strip(',.').lower())
-			f.write(format('*'+quote+'*'+'\n'))
-			await bot.say("added, thanks for contribution")
+				if MSG in open("quotes.txt").read():
+					await bot.say("ERROR: Already entered!")
+				else:
+					regex = re.compile('[^a-zA-Z0-9 ]')
+					quote = regex.sub('', MSG.strip(',.').lower().strip())
+					f.write(format('*'+quote+'*'+'\n'))
+					await bot.say("added, thanks for contribution. your quote displays as: "+'*'+quote+'*'+'\n')
 	else:
-		bot.say("There was an error adding your message. Try reducing its length.")
+		await bot.say("ERROR: Too long or too short!")
 	f.close()
 
 @bot.command()
@@ -38,11 +42,9 @@ async def quote():
 	await bot.say(quote)
 	print(quote)
 
-
 @bot.command(pass_context=True)
 async def play(ctx):
 	audio = "audio/" + random.choice(os.listdir("audio/"))
-	bot.say(audio)
 	Author = ctx.message.author
 	Channel = Author.voice_channel
 	voice = await bot.join_voice_channel(Channel)
@@ -50,17 +52,10 @@ async def play(ctx):
 	player.start()
 	tag = TinyTag.get(audio)
 	duration = tag.duration
+	#await bot.say("selected "+audio+", which lasts "+str(round(duration,1))+" seconds, called by "+Author.display_name+".")
+	await bot.change_presence(game=discord.Game(name=str(audio)+": "+str(duration)))
 	print(duration)
-	if duration > 30:
-		await asyncio.sleep(15)
-		await bot.say("DURATION IS LONG."+duration)
-		await voice.disconnect()
 	await asyncio.sleep(duration)
 	await voice.disconnect()
-	
-async def on_message(msg):
-	if(msg.lower().contains("nigger")):
-		bot.say("HEY NIGGER, THIS IS A MOTHERFUCKING SAFE SPACE")
-	
-bot.add_listener(on_message, "on_message")
+	await bot.change_presence(game=discord.Game(name="you suck"))
 bot.run(TOKEN)
