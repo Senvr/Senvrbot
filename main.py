@@ -1,18 +1,12 @@
-import discord
+import discord, asyncio, os, re, datetime, random
 from tinytag import TinyTag
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
-import asyncio
-import os
-import re
-import datetime
-import random
 prefix = "$"
-import asyncio
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = ''
+TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.DmA49A.-7wd0vV-wUN2fwBn7IfyioM_cKs'
   # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
@@ -40,14 +34,14 @@ async def quoteadd(ctx):
 
 @bot.command()
 async def quote():
-	quote=random.choice(list(open('quotes.txt')))
+	quote = random.choice(list(open('quotes.txt')))
 	await bot.say(quote)
 	print(quote)
 
 
 @bot.command(pass_context=True)
 async def play(ctx):
-	audio="audio/"+random.choice(os.listdir("audio/"))
+	audio = "audio/" + random.choice(os.listdir("audio/"))
 	bot.say(audio)
 	Author = ctx.message.author
 	Channel = Author.voice_channel
@@ -55,7 +49,7 @@ async def play(ctx):
 	player = voice.create_ffmpeg_player(audio)
 	player.start()
 	tag = TinyTag.get(audio)
-	duration=tag.duration
+	duration = tag.duration
 	print(duration)
 	if duration > 30:
 		await asyncio.sleep(15)
