@@ -6,7 +6,7 @@ from discord.voice_client import VoiceClient
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = 'XXXXXXX'
+TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.DmD8Ng.2n3Vjr76HhChwSildAeqB9dfJXM'
   # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
@@ -17,14 +17,14 @@ async def on_ready():
 	await bot.change_presence(game=discord.Game(name='you suck'))
 @bot.command()
 async def ping():
-	await bot.say("reply")
+	await bot.say("pong, bitch")
 
 @bot.command(pass_context=True)
 async def quoteadd(ctx):
 	f = open("quotes.txt","a")
 	MSG = ctx.message.content.replace('$quoteadd ','')
 	print(len(MSG))
-	if len(MSG) < 32 and len(MSG) > 2:
+	if len(MSG) < 200 and len(MSG) > 2:
 				if MSG in open("quotes.txt").read():
 					await bot.say("ERROR: Already entered!")
 				else:
@@ -41,7 +41,9 @@ async def quote():
 	quote = random.choice(list(open('quotes.txt')))
 	await bot.say(quote)
 	print(quote)
-
+@bot.command(pass_context=True)
+async def image(ctx):
+	await bot.send_file(ctx.message.channel, 'image.gif')
 @bot.command(pass_context=True)
 async def play(ctx):
 	audio = "audio/" + random.choice(os.listdir("audio/"))
@@ -52,7 +54,6 @@ async def play(ctx):
 	player.start()
 	tag = TinyTag.get(audio)
 	duration = tag.duration
-	#await bot.say("selected "+audio+", which lasts "+str(round(duration,1))+" seconds, called by "+Author.display_name+".")
 	await bot.change_presence(game=discord.Game(name=str(audio)+": "+str(duration)))
 	print(duration)
 	await asyncio.sleep(duration)
