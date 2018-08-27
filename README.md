@@ -9,3 +9,5 @@ Audio is read from the directory listing of the `audio` directory, a random trac
 
 ## install.sh
 A shell script that installs the required dependancies. Tested and works on Ubuntu 18.04, Debian 9
+## image.gif
+placeholder image for a command
