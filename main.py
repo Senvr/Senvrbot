@@ -6,7 +6,7 @@ from discord.voice_client import VoiceClient
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.DmD8Ng.2n3Vjr76HhChwSildAeqB9dfJXM'
+TOKEN = 'jukedbb
   # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
