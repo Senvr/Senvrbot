@@ -11,9 +11,9 @@ Audio is read from the directory listing of the `audio` directory, a random trac
 A shell script that installs the required dependancies. Tested and works on Ubuntu 18.04, Debian 9. Should work on a raspberry pi or something but I'm not 100% on that
 ## startup.sh
 Shell script that starts the application in a screen session. You can start the bot directly via `python3 main.py`.
-## pid
+## pid(file)
 dynamic PID file
-#commands below
+###commands below
 ##ping
 return a message. used to check if the bot is working or not
 ##quoteadd
