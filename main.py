@@ -114,6 +114,9 @@ async def getreactions():
 			print(filenames.strip())
 			files.append(filenames.strip())
 	await bot.say(files[1:])
+@bot.command()
+async def github():
+	await bot.say("https://github.com/Senvr/Senvrbot")
 @bot.event
 async def on_command_error(error, ctx):
 	await bot.send_message(ctx.message.channel, "`"+str(error)+"`")
