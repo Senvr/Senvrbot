@@ -7,8 +7,7 @@ import subprocess
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN = 'NDgyMDc3NzIyMTY0NzIzNzEz.DmD8Ng.2n3Vjr76HhChwSildAeqB9dfJXM'
-  # Where 'TOKEN' is your bot token
+TOKEN="REPLACEME"  # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
 	print('------')
@@ -43,15 +42,15 @@ async def quoteadd(ctx):
 				if MSG in open("quotes.txt").read():
 					await bot.say("ERROR: Already entered!")
 				else:
-					f.write(format(MSG))
-					await bot.say("added, thanks for contribution. your quote displays as: "+MSG+"\n")
+					f.write(format(MSG)+'\n')
+					await bot.say("added, thanks for contribution. your quote displays as: "+MSG)
 	else:
 		await bot.say("ERROR: Too long or too short!")
 	f.close()
 
 @bot.command()
 async def quote():
-	quote = '"*'+random.choice(list(open('quotes.txt')))+'*"'
+	quote = '*"'+random.choice(list(open('quotes.txt'))).strip()+'"*'
 	await bot.say(quote.rstrip())
 	print(quote)
 @bot.command(pass_context=True)
