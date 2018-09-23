@@ -15,7 +15,7 @@ Shell script that starts the application in a screen session. You can start the 
 ## pid(file)
 dynamic PID file
 
-# commands below
+# <h1>Commands</h1>
 ### ping
 return a message. used to check if the bot is working or not
 
