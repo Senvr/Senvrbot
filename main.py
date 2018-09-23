@@ -7,7 +7,7 @@ import subprocess
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN="REPLACEME"  # Where 'TOKEN' is your bot token
+TOKEN="REPLACE ME"  # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
 	print('------')
