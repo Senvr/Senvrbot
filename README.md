@@ -1,6 +1,6 @@
 # <h1>Senvrbot</h1>
 My Discord bot written in Python via discord.py
-NOTE: You will need to enter your own discord bot token in. I assume you know how to do that.
+NOTE: You will need to enter your own discord bot token in. I assume you know how to do that. (It's the TOKEN variable)
 ## Quotes.txt
 Quotes are read from `quotes.txt` found in the root path
 
