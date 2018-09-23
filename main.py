@@ -28,34 +28,34 @@ async def ping():
 
 @bot.command(pass_context=True)
 async def quoteadd(ctx):
+	print(ctx.message.content)
+	if len(ctx.message.content) < 5:
+		await bot.say("Too short")
+		return;
+	else:
+		await bot.say("Trying to add...")
+	regex = re.compile('[^a-zA-Z0-9 ]')
 	f = open("quotes.txt","a")
-	MSG = ctx.message.content.replace('$quoteadd ','')
+	MSG = regex.sub('', ctx.message.content.replace('$quoteadd ','')).lower().strip(',.').strip()
 	print(len(MSG))
-	if len(MSG) < 200 and len(MSG) > 2:
+	if len(MSG) < 200:
 				if MSG in open("quotes.txt").read():
 					await bot.say("ERROR: Already entered!")
 				else:
-					regex = re.compile('[^a-zA-Z0-9 ]')
-					quote = regex.sub('', MSG.strip(',.').lower().strip())
-					f.write(format('*'+quote+'*'+'\n'))
-					await bot.say("added, thanks for contribution. your quote displays as: "+'*'+quote+'*'+'\n')
+					f.write(format(MSG))
+					await bot.say("added, thanks for contribution. your quote displays as: "+MSG+"\n")
 	else:
 		await bot.say("ERROR: Too long or too short!")
 	f.close()
 
 @bot.command()
 async def quote():
-	quote = random.choice(list(open('quotes.txt')))
-	await bot.say(quote)
+	quote = '"*'+random.choice(list(open('quotes.txt')))+'*"'
+	await bot.say(quote.rstrip())
 	print(quote)
-@bot.command()
-async def phrase():
-	phrases = ["shazam", "skedush","skiddly doo","bambeen","bamboon","consume","oogachaka","ooga booga"]
-	phrase = random.choice(phrases)
-	await bot.say(phrase)
 @bot.command(pass_context=True)
 async def image(ctx):
-	phrases = ["shazam", "skedush","skiddly doo","bambeen","bamboon","consume"]
+	phrases = ["shazam", "skedush","skiddly doo","bambeen","bamboon"]
 	phrase = random.choice(phrases)
 	await bot.say(phrase)
 	img = "images/" + random.choice(os.listdir("images/"))
