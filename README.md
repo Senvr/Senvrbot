@@ -1,4 +1,4 @@
-# Senvrbot
+# <h1>Senvrbot</h1>
 My Discord bot written in Python via discord.py
 NOTE: You will need to enter your own discord bot token in. I assume you know how to do that.
 ## Quotes.txt
