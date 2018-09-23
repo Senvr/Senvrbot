@@ -15,33 +15,33 @@ Shell script that starts the application in a screen session. You can start the 
 ## pid(file)
 dynamic PID file
 
-###commands below
-#ping
+### commands below
+# ping
 return a message. used to check if the bot is working or not
 
-##quoteadd
+## quoteadd
 add a quote to the quotes file
 
-##quote
+## quote
 display a random line from the file
 
-##phrase
+## phrase
 display a random phrase from an array
 
-##image
+## image
 display a random phrase and image
 
-##play
+## play
 plays a random sound effect from the audio directory
 
-##react
+## react
 not finished
 
-##pid
+## pid
 display  pid
 
-##isup
+## isup
 see if a process is running on the host OS
 
-#getreactions
+## getreactions
 unfinished
