@@ -48,3 +48,6 @@ unfinished
 
 ### github
 post github link
+
+### invite
+https://discordapp.com/oauth2/authorize?client_id=508205149148282891&scope=bot&permissions=8
