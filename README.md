@@ -49,5 +49,14 @@ unfinished
 ### github
 post github link
 
+### gayrate
+Generates a random number and store it on a user-basis. And it calls you gay.
+
+### adduser
+Adds a user to the sudoers.conf file. 
+##resetUserData
+Resets all data in userdata/ folder.
 ### invite
 https://discordapp.com/oauth2/authorize?client_id=508205149148282891&scope=bot&permissions=8
+
+
