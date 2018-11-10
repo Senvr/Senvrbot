@@ -9,7 +9,7 @@ from time import sleep as y
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN="NDgyMDc3NzIyMTY0NzIzNzEz.DsJ55A.XYpmY33ncbZKYhZmEjksmjwtoDg"
+TOKEN=""
   # Where 'TOKEN' is your bot token
 @bot.event
 async def on_ready():
