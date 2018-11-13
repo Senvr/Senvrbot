@@ -57,6 +57,6 @@ Adds a user to the sudoers.conf file.
 ##resetUserData
 Resets all data in userdata/ folder.
 ### invite
-https://discordapp.com/oauth2/authorize?client_id=508205149148282891&scope=bot&permissions=8
+https://discordapp.com/oauth2/authorize?client_id=512052625504468993&scope=bot&permissions=8
 
 
