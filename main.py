@@ -6,11 +6,21 @@ from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import subprocess
 from time import sleep as y
+#from __future__ import absolute_import, unicode_literals
+#import json
+#from django.http import HttpResponse
+#from django.views.decorators.http import require_POST
+#from django.views.decorators.csrf import csrf_exempt
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN=""
+TOKEN="NTEyMDUyNjI1NTA0NDY4OTkz.Dsz2YQ.0PEntI1IeK4Qgo36crDrmB6w1Fs"
   # Where 'TOKEN' is your bot token
+#@require_POST()
+#@csrf_exempt()
+#def handle_article_published(request):
+	#payload = json.loads(request.body)
+	#print('A :{0[ref]}'.format(payload))
 @bot.event
 async def on_ready():
 	print('------')
@@ -18,7 +28,8 @@ async def on_ready():
 	print('Logged in as')
 	print(bot.user.name)
 	print(bot.user.id)
-	await bot.change_presence(game=discord.Game(name='back from the dead, motherfucker'))
+	print(TOKEN)
+	await bot.change_presence(game=discord.Game(name='Mk8'))
 	p=open("pid","w")
 	p.write(str(os.getpid())+'\n')
 	p.close
@@ -27,9 +38,7 @@ async def on_ready():
 	print('------')
 @bot.event
 async def on_message(msg):
-	p=open("log.txt","a")
-	p.write(msg.author.name+": "+"'"+msg.content+"'"+"\n["+msg.channel.name+"]\n")
-	p.close()
+
 	if msg.author == bot.user:
 		return
 	if " ping " in str(msg.content).lower().strip():
@@ -58,9 +67,9 @@ async def quoteadd(ctx):
 	regex = re.compile('[^a-zA-Z0-9 ,.!?/]')
 	f = open("quotes.txt","a")
 	MSG = regex.sub('', str("**`"+ctx.message.content+"`** by "+ctx.message.author.name).replace('$quoteadd ','')).strip()
-	if len(MSG) < 200 and len(MSG) > 2:
+	if len(ctx.message.content.replace('$quoteadd ','')) < 200 and len(MSG) > 11:
 				if MSG.lower() in open("quotes.txt").read().lower():
-					await bot.say("ERROR: Already entered!")
+					await bot.say("ERROR: Already entered, or your message is too big/small! Must be above 2 characters and be under 200.")
 				else:
 					f.write(format(MSG)+'\n')
 					await bot.say("added, thanks for contribution. your quote displays as: "+MSG)
@@ -141,6 +150,7 @@ async def github():
 	await bot.say("https://github.com/Senvr/Senvrbot")
 @bot.event
 async def on_command_error(error, ctx):
+	await bot.send_message(ctx.message.channel,"uh oh spaghetti-o's: @Senvr")
 	await bot.send_message(ctx.message.channel, "`"+str(error)+"`")
 	print(error)
 	await bot.change_presence(game=discord.Game(name='ERROR:'+str(error)))
@@ -148,29 +158,45 @@ async def on_command_error(error, ctx):
 #async def guessinggame(ctx, guess):
 	#await bot.say("You guessed: "+str(guess))
 	#number=
-def isSudoer(person):
-	sudofile=open("sudoers.conf","r")
+def isSudoer(person, ctx):
+	print("0")
+	print(str(ctx.message.server.id)+"/sudoers.conf")
+	if not Path(str(ctx.message.server.id)+"/sudoers.conf").exists():
+		os.mkdir(str(ctx.message.server.id))
+		open(str(ctx.message.server.id)+"/sudoers.conf","x")
+	print("2")
+	sudofile=open(str(ctx.message.server.id)+"/sudoers.conf","r")
 	regex = re.compile('[^0-9]')
 	sudoers=sudofile.read().strip().split()
 	sudofile.close
 	print(sudoers)
-	if person in sudoers:
-		print(str(person)+" is a sudoer")
+	owner=ctx.message.server.owner.id
+	if person == owner:
+		print(str(person)+" is a sudoer. Owner, infact.")
+		return True;
+	elif person in sudoers:
+		print(str(person)+" is a sudoer.")
 		return True;
 	else:
-		print(str(person)+" is not a sudoer")
+		print(str(person)+" is not a sudoer.")
 		return False;
 	#await bot.say('ERROR: Something weird happened. Tell Senvr if you arent him. [1]')
 @bot.command(pass_context=True)
 async def adduser(ctx, Member : discord.Member):
-	if isSudoer(str(ctx.message.author.id)):
-		sudofile=open("sudoers.conf","r+")
-		if isSudoer(str(Member.id)):
+	await bot.say("Attempting to adduser to sudoers...")
+	if isSudoer(str(ctx.message.author.id), ctx):
+		print("1")
+		if isSudoer(str(Member.id),ctx):
 			await bot.send_message(ctx.message.channel,"They're already a sudoer.")
-			sudofile.close
+			print("C")
 			return
 		else:
+				sudofile=open(str(ctx.message.server.id)+"/sudoers.conf","r+")
 				sudofile.write(str(Member.id)+"\n")
+				print("B")
+				regex = re.compile('[^0-9]')
+				sudoers=sudofile.read().strip().split()
+				print(sudoers)
 				await bot.send_message(ctx.message.channel, "OK, added the user. They're a sudoer.")
 				sudofile.close
 				return;
@@ -181,7 +207,7 @@ async def adduser(ctx, Member : discord.Member):
 	#sudofile.close
 @bot.command(pass_context=True)
 async def resetUserData(ctx):
-	if isSudoer(ctx.message.author.id):
+	if isSudoer(ctx.message.author.id,ctx):
 		await bot.say("Removing all userdata!")
 		folder = 'userdata/'
 		for files in os.listdir(folder):
@@ -189,10 +215,16 @@ async def resetUserData(ctx):
 @bot.command(pass_context=True)
 async def gayrate(ctx, Member : discord.Member):
 	gayRating=""
+	if int(Member.id) == int(bot.user.id):
+		await bot.say("[GG] Your gay rating is: -999")
+		return;
 	if Path("userdata/"+Member.id).is_file():
 		print("Exists!")
 		f=open("userdata/"+str(Member.id),"r")
 		await bot.say("[MEM] Your gay rating is: "+f.read())
+		gayrating=f.read()
+		#if gayrating > 50:
+			#await bot.say("Yikes, that's quite big")
 		f.close
 		return
 	else:
