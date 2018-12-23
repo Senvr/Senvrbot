@@ -1,8 +1,8 @@
 # <h1>Senvrbot</h1>
-
-![click me](https://i.imgur.com/DlaoTng.png)
 My Discord bot written in Python via discord.py
 NOTE: You will need to enter your own discord bot token in. I assume you know how to do that. (It's the TOKEN variable)
+
+![click me](https://i.imgur.com/DlaoTng.png)
 ## Quotes.txt
 Quotes are read from `quotes.txt` found in the root path
 
