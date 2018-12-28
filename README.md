@@ -1,6 +1,7 @@
 # <h1>Senvrbot: UNSTABLE!</h1>
 My Discord bot written in Python via discord.py
 NOTE: You will need to enter your own discord bot token in. I assume you know how to do that. (It's the TOKEN variable)
+NOTE2: starter.sh and install.sh currently only work on senvr's machine. future versions may fix this.
 
 ![click me](https://cdn.discordapp.com/attachments/480529810750308362/528018221010255874/unknown.png)
 ## Quotes.txt
@@ -11,7 +12,7 @@ Audio is read from the directory listing of the `audio` directory, a random trac
 
 ## install.sh
 A shell script that installs the required dependancies. Tested and works on Ubuntu 18.04, Debian 9. Should work on a raspberry pi or something but I'm not 100% on that
-## startup.sh
+## starter.sh
 Shell script that starts the application in a screen session. You can start the bot directly via `python3 main.py`.
 
 ## pid(file)
@@ -32,6 +33,9 @@ display a random phrase from an array
 
 ### image
 display a random phrase and image
+
+### cursed_image
+display a random phrase and a cursed image
 
 ### play
 plays a random sound effect from the audio directory
