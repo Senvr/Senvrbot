@@ -22,12 +22,13 @@ async def on_ready():
         print(bot.user.name)
         print(bot.user.id)
         print(TOKEN)
-        await bot.change_presence(game=discord.Game(name='Mk8'))
+        VER=open("VERSION","r")
+        await bot.change_presence(game=discord.Game(name=VER.read()))
         p=open("pid","w")
         p.write(str(os.getpid())+'\n')
-        p.close
         print("pid="+str(os.getpid()))
-
+        VER.close
+        p.close
         print('------')
 
 
