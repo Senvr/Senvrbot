@@ -1,5 +1,4 @@
 sudo apt update
-set -e
 sudo apt install libssl-dev  -y
 sudo apt install python3 python3-pip libffi-dev -y
 sudo apt install -y libsqlite3-dev
