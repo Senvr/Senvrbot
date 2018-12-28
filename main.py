@@ -43,7 +43,7 @@ async def on_message(msg):
 	MSG=""
 	MSG=str(msg.content).lower().strip()
 	
-	if msg.author == bot.user || msg.author.bot:
+	if msg.author == bot.user or msg.author.bot:
 		MSG=""
 		return
 	if msg.author == bot.user:
