@@ -5,22 +5,15 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import subprocess
-from time import sleep as y
-#from __future__ import absolute_import, unicode_literals
-#import json
-#from django.http import HttpResponse
-#from django.views.decorators.http import require_POST
-#from django.views.decorators.csrf import csrf_exempt
+import threading
+import random
+import six
+import urllib.request
 prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
-TOKEN="NTEyMDUyNjI1NTA0NDY4OTkz.Dsz2YQ.0PEntI1IeK4Qgo36crDrmB6w1Fs"
-  # Where 'TOKEN' is your bot token
-#@require_POST()
-#@csrf_exempt()
-#def handle_article_published(request):
-	#payload = json.loads(request.body)
-	#print('A :{0[ref]}'.format(payload))
+TOKEN="NTEyMDUyNjI1NTA0NDY4OTkz.DuxkwA.JWqZYMo0tJIBPOKzWfxZyElMV-8"
+
 @bot.event
 async def on_ready():
 	print('------')
@@ -36,26 +29,72 @@ async def on_ready():
 	print("pid="+str(os.getpid()))
 
 	print('------')
+
 @bot.event
 async def on_message(msg):
-
+	
+	if not Path(str(msg.server.id)).exists():
+		os.mkdir(str(msg.server.id))
+		open(str(msg.server.id)+"/log.txt","x")
+	p=open(str(msg.server.id)+"/log.txt","a")
+	p.write(msg.author.name+": "+"'"+msg.content+"'"+"\n["+msg.channel.name+"]\n")
+	p.close()
+	MSG=""
+	MSG=str(msg.content).lower().strip()
+	
+	if msg.author == bot.user:
+		MSG=""
+		return
 	if msg.author == bot.user:
 		return
-	if " ping " in str(msg.content).lower().strip():
+		
+	if " windows" in MSG:
+		await bot.send_message(msg.channel,"linux is better")
+	if " ubuntu" in MSG or " linux mint" in MSG or " fedora" in MSG or " gentoo" in MSG :
+		await bot.send_message(msg.channel,"debian is better")
+	if "i use debian" in MSG or "i use linux" in MSG:
+		await bot.send_message(msg.channel,"good")
+	
+	if " ping" in MSG:
 		await bot.send_message(msg.channel, "pong")
 		msg=""
 		return
-	if " liberal" in str(msg.content).lower().strip() or " socialism" in str(msg.content).lower().strip() or " communism" in str(msg.content).lower().strip() or " pro-choice" in str(msg.content).lower().strip()or " communist" in str(msg.content).lower().strip()or " socialist" in str(msg.content).lower().strip():
+	if " nigger" in MSG:
+		await bot.send_message(msg.channel, "you can't say that thats racist")
+	if " ddos" in MSG or " ddossing" in MSG:
+		await bot.send_message(msg.channel, "ddos is illegal u kno")
+	if "liberal" in MSG or "socialism" in MSG or " communism " in MSG or " pro-choice " in MSG or " communist " in MSG or " socialist " in MSG:
 		img = "shapiro/" + random.choice(os.listdir("shapiro/"))
 		await bot.send_message(msg.channel, 'Ben Shapiro TRIGGERS Liberal by SENDING them to NAZI DEATH CAMPS using pure CONSERVATIVE LOGIC and REASONING and then ANGERS SJW by GOING on a RAMPAGE literally RAPING and MURDERING every single MINORITY within a 200 MILE RADIUS then TROLLS Libtard with TRUMP DERANGEMENT SYNDROME by licking Donald Trumps MICROPENIS of all the DRIED CUM from the CONCEPTION of Barron Trump and he ANGERS democrat by FEEDING upon the FLESH of ABORTED FETUSES and the BLOOD of EVERY single LIBTARD to literally BECOME a GOD AMONG MEN which TROLLS idiot COMMIES by OPENING the seals of HELL and CAUSING the APOCALYPSE in which the DEVIL RAPES CHILDREN and TEARS OFF the heads of Liberal TODDLERS and LITERALLY setting WOMEN’s RIGHTS a THOUSAND YEARS and also Ben TRIGGERS the SOCIALISTS by RAPING the UNDEAD CORPSE of LEON TROTSKY and JOSEPH STALIN and he PISSES OFF the LEFTISTS by ESTABLISHING a NEW WORLD ORDER in which he is the SUPREME GOD EMPEROR OF ALL OF THE AMERICAS, CHINA, EUROPE, BRITAIN, TAIWAN, and THAT RANDOM ISLAND IN THE MIDDLE OF THE PACIFIC OCEAN and MURDERS all POLITICAL DISSIDENTS within the government and then he LITERALLY summons CTHULHU and have home and the DEVIL FUCK HIM IN THE ASS while he CUMS all OVER the BOTTLE of LIBERAL TEARS and then he PRANKS Chink Ugayer by IMITATING him and literally dying from the ANAL WOUNDS from Literally being FUCKED IN THE ASS by SATAN and CTHULHU and then ENRAGES the COMMIES by RAPING GOD and BECOMING the NEW ABSOLUTE RULER OF THE UNIVERSE!!!!! (LIBERALS TROLLED) (NOT CLICKBAIT) (SJWs and FEMINISTS OWNED)')
 		await bot.send_file(msg.channel, img)
 		msg=""
 		return
+	if "y_act1" in MSG:
+		await bot.send_message(msg.channel, "y_act2")
 	await bot.process_commands(msg)
 @bot.command()
 async def ping():
 	await bot.say("pong, bitch")
-
+@bot.command()
+async def eugenics():
+	url = "http://eugenics.fun/api/random/"
+	response=urllib.request.urlopen(url)
+	data = response.read() 
+	text = data.decode('utf-8')
+	await bot.say(text+"\n\ngot from http://eugenics.fun/api")
+@bot.command(pass_context=True)
+async def ask(ctx):
+	if len(ctx.message.content.strip()) < 2:
+		await bot.send_message(ctx.message.channel, "You need to ask a question.")
+		return;
+	else:
+		replies=["yes","no","maybe"]
+		await bot.say(random.choice(replies))
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
 @bot.command(pass_context=True)
 async def quoteadd(ctx):
 	print(ctx.message.content)
@@ -65,14 +104,17 @@ async def quoteadd(ctx):
 	else:
 		await bot.say("Trying to add...")
 	regex = re.compile('[^a-zA-Z0-9 ,.!?/]')
-	f = open("quotes.txt","a")
-	MSG = regex.sub('', str("**`"+ctx.message.content+"`** by "+ctx.message.author.name).replace('$quoteadd ','')).strip()
+	
+	MSG = regex.sub('', str("**'"+ctx.message.content+"'** by "+ctx.message.author.name).replace('$quoteadd ','')).strip()
 	if len(ctx.message.content.replace('$quoteadd ','')) < 200 and len(MSG) > 11:
 				if MSG.lower() in open("quotes.txt").read().lower():
 					await bot.say("ERROR: Already entered, or your message is too big/small! Must be above 2 characters and be under 200.")
 				else:
+					f = open("quotes.txt","a")
 					f.write(format(MSG)+'\n')
-					await bot.say("added, thanks for contribution. your quote displays as: "+MSG)
+					ID=file_len("quotes.txt")
+					await bot.say("added, thanks for contribution. your quote displays as: "+MSG+" with id "+str(ID))
+					f.close()
 	else:
 		await bot.say("ERROR: Too long or too short!")
 	f.close()
@@ -89,7 +131,9 @@ async def image(ctx):
 	await bot.say(phrase)
 	img = "images/" + random.choice(os.listdir("images/"))
 	await bot.send_file(ctx.message.channel, img)
-
+@bot.command(pass_context=True)
+async def credits(ctx):
+	await bot.say("HELPERS:\nSenvr\nZeman\nAnOverlyComplexUsername (You're fucking right on that)\nTeenarous")
 @bot.command(pass_context=True)
 async def play(ctx):
 	audio = "audio/" + random.choice(os.listdir("audio/"))
@@ -154,17 +198,31 @@ async def on_command_error(error, ctx):
 	await bot.send_message(ctx.message.channel, "`"+str(error)+"`")
 	print(error)
 	await bot.change_presence(game=discord.Game(name='ERROR:'+str(error)))
-#@bot.command(pass_context = True)
-#async def guessinggame(ctx, guess):
-	#await bot.say("You guessed: "+str(guess))
-	#number=
+@bot.command(pass_context = True)
+async def guessinggame(ctx, guess, difficulty):
+	if int(difficulty)  == "" :
+		await bot.say('Difficulty value must be a number! (math: `randint(1,1+difficulty*2)`')
+		return;
+	
+	guess=1+int(difficulty)*2
+	await bot.say("You guessed: "+str(guess)+" out of "+str(guess))
+	number=random.randint(1,guess)
+	if int(guess) == number:
+		await bot.say("You win!")
+	else:
+		print("1")
+		await bot.say("You lost. You were off by "+str(abs(int(guess)-number)))
 def isSudoer(person, ctx):
 	print("0")
 	print(str(ctx.message.server.id)+"/sudoers.conf")
-	if not Path(str(ctx.message.server.id)+"/sudoers.conf").exists():
+	print("1")
+	if not Path(str(ctx.message.server.id)):
 		os.mkdir(str(ctx.message.server.id))
+	if not Path(str(ctx.message.server.id)+"/sudoers.conf").exists():
+		print("2")
 		open(str(ctx.message.server.id)+"/sudoers.conf","x")
-	print("2")
+		print("3")
+	print("4")
 	sudofile=open(str(ctx.message.server.id)+"/sudoers.conf","r")
 	regex = re.compile('[^0-9]')
 	sudoers=sudofile.read().strip().split()
