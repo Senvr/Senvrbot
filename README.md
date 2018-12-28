@@ -1,7 +1,6 @@
 # <h1>Senvrbot: UNSTABLE!</h1>
 My Discord bot written in Python via discord.py
 NOTE: You will need to enter your own discord bot token in. I assume you know how to do that. (It's the TOKEN variable)
-NOTE2: starter.sh and install.sh currently only work on senvr's machine. future versions may fix this.
 
 ![click me](https://cdn.discordapp.com/attachments/480529810750308362/528018221010255874/unknown.png)
 ## Quotes.txt
