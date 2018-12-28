@@ -71,6 +71,8 @@ async def on_message(msg):
 		return
 	if "y_act1" in MSG:
 		await bot.send_message(msg.channel, "y_act2")
+	if "ooga" in MSG:
+		await bot.send_message(msg.channel, "booga")
 	await bot.process_commands(msg)
 @bot.command()
 async def ping():
@@ -132,6 +134,14 @@ async def image(ctx):
 	img = "images/" + random.choice(os.listdir("images/"))
 	await bot.send_file(ctx.message.channel, img)
 @bot.command(pass_context=True)
+async def cursed_image(ctx):
+        phrases = ["shazam", "skedush","skiddly doo","bambeen","bamboon"]
+        phrase = random.choice(phrases)
+        await bot.say(phrase)
+        img = "images/cursed/" + random.choice(os.listdir("images/cursed/"))
+        await bot.send_file(ctx.message.channel, img)
+@bot.command(pass_context=True)
+
 async def credits(ctx):
 	await bot.say("HELPERS:\nSenvr\nZeman\nAnOverlyComplexUsername (You're fucking right on that)\nTeenarous")
 @bot.command(pass_context=True)

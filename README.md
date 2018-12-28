@@ -33,6 +33,9 @@ display a random phrase from an array
 ### image
 display a random phrase and image
 
+### cursed_image
+display a random phrase and a cursed image
+
 ### play
 plays a random sound effect from the audio directory
 
