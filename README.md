@@ -1,8 +1,8 @@
-# <h1>Senvrbot</h1>
+# <h1>Senvrbot: UNSTABLE!</h1>
 My Discord bot written in Python via discord.py
 NOTE: You will need to enter your own discord bot token in. I assume you know how to do that. (It's the TOKEN variable)
 
-![click me](https://i.imgur.com/1VeRC0O.png)
+![click me](https://cdn.discordapp.com/attachments/480529810750308362/528018221010255874/unknown.png)
 ## Quotes.txt
 Quotes are read from `quotes.txt` found in the root path
 
