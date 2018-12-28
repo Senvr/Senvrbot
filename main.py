@@ -16,19 +16,20 @@ TOKEN="NTEyMDUyNjI1NTA0NDY4OTkz.DuxkwA.JWqZYMo0tJIBPOKzWfxZyElMV-8"
 
 @bot.event
 async def on_ready():
-	print('------')
+        print('------')
 
-	print('Logged in as')
-	print(bot.user.name)
-	print(bot.user.id)
-	print(TOKEN)
-	await bot.change_presence(game=discord.Game(name=list(open('VERSION'))).strip()))
-	p=open("pid","w")
-	p.write(str(os.getpid())+'\n')
-	p.close
-	print("pid="+str(os.getpid()))
+        print('Logged in as')
+        print(bot.user.name)
+        print(bot.user.id)
+        print(TOKEN)
+        await bot.change_presence(game=discord.Game(name='Mk8'))
+        p=open("pid","w")
+        p.write(str(os.getpid())+'\n')
+        p.close
+        print("pid="+str(os.getpid()))
 
-	print('------')
+        print('------')
+
 
 @bot.event
 async def on_message(msg):
