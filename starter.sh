@@ -1,2 +1,2 @@
-cd /home/lee/SenvrBot1/
+cd DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 screen -S SenvrBot1 -d -m python3 main.py
