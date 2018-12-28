@@ -13,7 +13,13 @@ prefix = "$"
 
 bot = commands.Bot(command_prefix=prefix)
 TOKEN="NTEyMDUyNjI1NTA0NDY4OTkz.DuxkwA.JWqZYMo0tJIBPOKzWfxZyElMV-8"
-
+async def status_task():
+    while True:
+        await asyncio.sleep(10)
+        VER=open("VERSION","r")
+        await bot.change_presence(game=discord.Game(name=VER.read()))
+        VER.close
+	
 @bot.event
 async def on_ready():
         print('------')
@@ -30,14 +36,14 @@ async def on_ready():
         VER.close
         p.close
         print('------')
-
+	
 
 @bot.event
 async def on_message(msg):
 	MSG=""
 	MSG=str(msg.content).lower().strip()
 	
-	if msg.author == bot.user:
+	if msg.author == bot.user || msg.author.bot:
 		MSG=""
 		return
 	if msg.author == bot.user:
@@ -203,6 +209,7 @@ async def on_command_error(error, ctx):
 	await bot.send_message(ctx.message.channel, "`"+str(error)+"`")
 	print(error)
 	await bot.change_presence(game=discord.Game(name='ERROR:'+str(error)))
+	bot.loop.create_task(status_task())
 @bot.command(pass_context = True)
 async def guessinggame(ctx, guess, difficulty):
 	if int(difficulty)  == "" :
