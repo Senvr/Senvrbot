@@ -22,7 +22,7 @@ async def on_ready():
 	print(bot.user.name)
 	print(bot.user.id)
 	print(TOKEN)
-	await bot.change_presence(game=discord.Game(name="list(open('VERSION'))).strip()"))
+	await bot.change_presence(game=discord.Game(name=list(open('VERSION'))).strip()))
 	p=open("pid","w")
 	p.write(str(os.getpid())+'\n')
 	p.close
@@ -32,13 +32,6 @@ async def on_ready():
 
 @bot.event
 async def on_message(msg):
-	
-	if not Path(str(msg.server.id)).exists():
-		os.mkdir(str(msg.server.id))
-		open(str(msg.server.id)+"/log.txt","x")
-	p=open(str(msg.server.id)+"/log.txt","a")
-	p.write(msg.author.name+": "+"'"+msg.content+"'"+"\n["+msg.channel.name+"]\n")
-	p.close()
 	MSG=""
 	MSG=str(msg.content).lower().strip()
 	
