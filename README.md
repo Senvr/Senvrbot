@@ -1,8 +1,8 @@
-# <h1>Senvrbot: UNSTABLE!</h1>
+# <h1>Senvrbot</h1>
 My Discord bot written in Python via discord.py
 NOTE: You will need to enter your own discord bot token in. I assume you know how to do that. (It's the TOKEN variable)
 
-![click me](https://cdn.discordapp.com/attachments/480529810750308362/528018221010255874/unknown.png)
+"No, I may be the God of trash, but a God no less-"
 ## Quotes.txt
 Quotes are read from `quotes.txt` found in the root path
 
@@ -62,6 +62,6 @@ Adds a user to the sudoers.conf file.
 ##resetUserData
 Resets all data in userdata/ folder.
 ### invite
-https://discordapp.com/oauth2/authorize?client_id=512052625504468993&scope=bot&permissions=8
+https://discordapp.com/oauth2/authorize?client_id=512052625504468993&scope=bot&permissions=3263488
 
 
