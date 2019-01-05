@@ -1,10 +1,3 @@
-######TODO LIST/FIXME LIST
-#FORMAT: [line number], [reason as to why it needs fixing/how to fix it]
-#Line 30, it isnt required overall and it makes a loop for no real reason
-#Line 136, finish ID system
-#line 193, finish REACT system
-#Line 227, ^^^
-#
 
 ###LIBS (not libtards)#######
 #used everywehre
@@ -24,10 +17,8 @@ import subprocess
 
 #apparently not used?
 import threading
-
-#used in guessinggame command AND ask
-import random
-
+#used in anything sudoer related
+import senvrlib
 #used in eugenics.api 
 import urllib.request
 ##############################
@@ -66,36 +57,42 @@ async def on_ready():
         p.close
         print('------')
 
+#REMOVEME
+@bot.command(pass_context=True)
+async def test_poke(ctx, name, var):
+	if senvrlib.isSudoer(ctx.message.author.id, ctx.message.server.id, ctx.message.server.owner.id):
+		await bot.send_message(ctx.message.channel, senvrlib.poke(name,var,str(ctx.message.server.id)))
 #This is where the bot says stuff like "debian is better" and crap. 
 @bot.event
 async def on_message(msg):
-	MSG=str(msg.content).lower().strip()
 	if msg.author == bot.user or msg.author.bot:
-		MSG=""
 		return
-	if " windows" in MSG:
-		await bot.send_message(msg.channel,"linux is better")
-	if " ubuntu" in MSG or " linux mint" in MSG or " fedora" in MSG or " gentoo" in MSG :
-		await bot.send_message(msg.channel,"debian is better")
-	if "i use debian" in MSG or "i use linux" in MSG:
-		await bot.send_message(msg.channel,"good")
-	if " ping" in MSG:
-		await bot.send_message(msg.channel, "pong")
-	if " nigger" in MSG:
-		await bot.send_message(msg.channel, "you can't say that thats racist")
-	if " ddos" in MSG or " ddossing" in MSG:
-		await bot.send_message(msg.channel, "ddos is illegal u kno")
-
-	#This is that "annoying" one. You can remove this if you so please.
-	if "liberal" in MSG or "socialism" in MSG or " communism " in MSG or " pro-choice " in MSG or " communist " in MSG or " socialist " in MSG:
-		img = "shapiro/" + random.choice(os.listdir("shapiro/"))
-		await bot.send_message(msg.channel, 'Ben Shapiro TRIGGERS Liberal by SENDING them to NAZI DEATH CAMPS using pure CONSERVATIVE LOGIC and REASONING and then ANGERS SJW by GOING on a RAMPAGE literally RAPING and MURDERING every single MINORITY within a 200 MILE RADIUS then TROLLS Libtard with TRUMP DERANGEMENT SYNDROME by licking Donald Trumps MICROPENIS of all the DRIED CUM from the CONCEPTION of Barron Trump and he ANGERS democrat by FEEDING upon the FLESH of ABORTED FETUSES and the BLOOD of EVERY single LIBTARD to literally BECOME a GOD AMONG MEN which TROLLS idiot COMMIES by OPENING the seals of HELL and CAUSING the APOCALYPSE in which the DEVIL RAPES CHILDREN and TEARS OFF the heads of Liberal TODDLERS and LITERALLY setting WOMEN’s RIGHTS a THOUSAND YEARS and also Ben TRIGGERS the SOCIALISTS by RAPING the UNDEAD CORPSE of LEON TROTSKY and JOSEPH STALIN and he PISSES OFF the LEFTISTS by ESTABLISHING a NEW WORLD ORDER in which he is the SUPREME GOD EMPEROR OF ALL OF THE AMERICAS, CHINA, EUROPE, BRITAIN, TAIWAN, and THAT RANDOM ISLAND IN THE MIDDLE OF THE PACIFIC OCEAN and MURDERS all POLITICAL DISSIDENTS within the government and then he LITERALLY summons CTHULHU and have home and the DEVIL FUCK HIM IN THE ASS while he CUMS all OVER the BOTTLE of LIBERAL TEARS and then he PRANKS Chink Ugayer by IMITATING him and literally dying from the ANAL WOUNDS from Literally being FUCKED IN THE ASS by SATAN and CTHULHU and then ENRAGES the COMMIES by RAPING GOD and BECOMING the NEW ABSOLUTE RULER OF THE UNIVERSE!!!!! (LIBERALS TROLLED) (NOT CLICKBAIT) (SJWs and FEMINISTS OWNED)')
-		await bot.send_file(msg.channel, img)
-		msg=""
-		return
-
-	if "ooga" in MSG:
-		await bot.send_message(msg.channel, "booga")
+	else:
+		MSG=re.sub("[^a-zA-Z ]","", str(msg.content).lower().strip())
+		if " windows" in MSG:
+			await bot.send_message(msg.channel,"linux is better")
+		if " ubuntu" in MSG or " linux mint" in MSG or " fedora" in MSG or " gentoo" in MSG :
+			await bot.send_message(msg.channel,"debian is better")
+		if "i use debian" in MSG or "i use linux" in MSG:
+			await bot.send_message(msg.channel,"good")
+		if " ping" in MSG:
+			await bot.send_message(msg.channel, "pong")
+		if "nigger" in MSG:
+			await bot.send_message(msg.channel, "you can't say that thats racist")
+		if " ddos" in MSG or " ddossing" in MSG:
+			await bot.send_message(msg.channel, "ddos is illegal u kno")
+		if " cia nigger" in MSG:
+			await bot.send_message(msg.channel, "they glow in the dark")
+		#This is that "annoying" one. You can remove this if you so please.
+		if "liberal" in MSG or "socialism" in MSG or " communism " in MSG or " pro-choice " in MSG or " communist " in MSG or " socialist " in MSG:
+			img = "shapiro/" + random.choice(os.listdir("shapiro/"))
+			await bot.send_message(msg.channel, 'Ben Shapiro TRIGGERS Liberal by SENDING them to NAZI DEATH CAMPS using pure CONSERVATIVE LOGIC and REASONING and then ANGERS SJW by GOING on a RAMPAGE literally RAPING and MURDERING every single MINORITY within a 200 MILE RADIUS then TROLLS Libtard with TRUMP DERANGEMENT SYNDROME by licking Donald Trumps MICROPENIS of all the DRIED CUM from the CONCEPTION of Barron Trump and he ANGERS democrat by FEEDING upon the FLESH of ABORTED FETUSES and the BLOOD of EVERY single LIBTARD to literally BECOME a GOD AMONG MEN which TROLLS idiot COMMIES by OPENING the seals of HELL and CAUSING the APOCALYPSE in which the DEVIL RAPES CHILDREN and TEARS OFF the heads of Liberal TODDLERS and LITERALLY setting WOMEN’s RIGHTS a THOUSAND YEARS and also Ben TRIGGERS the SOCIALISTS by RAPING the UNDEAD CORPSE of LEON TROTSKY and JOSEPH STALIN and he PISSES OFF the LEFTISTS by ESTABLISHING a NEW WORLD ORDER in which he is the SUPREME GOD EMPEROR OF ALL OF THE AMERICAS, CHINA, EUROPE, BRITAIN, TAIWAN, and THAT RANDOM ISLAND IN THE MIDDLE OF THE PACIFIC OCEAN and MURDERS all POLITICAL DISSIDENTS within the government and then he LITERALLY summons CTHULHU and have home and the DEVIL FUCK HIM IN THE ASS while he CUMS all OVER the BOTTLE of LIBERAL TEARS and then he PRANKS Chink Ugayer by IMITATING him and literally dying from the ANAL WOUNDS from Literally being FUCKED IN THE ASS by SATAN and CTHULHU and then ENRAGES the COMMIES by RAPING GOD and BECOMING the NEW ABSOLUTE RULER OF THE UNIVERSE!!!!! (LIBERALS TROLLED) (NOT CLICKBAIT) (SJWs and FEMINISTS OWNED)')
+			await bot.send_file(msg.channel, img)
+			msg=""
+			return
+	
+		if "ooga" in MSG:
+			await bot.send_message(msg.channel, "booga")
 
 	#This line is important. Otherwise it wont process commands.
 	await bot.process_commands(msg)
@@ -191,51 +188,10 @@ async def play(ctx):
 	await asyncio.sleep(duration)
 	await voice.disconnect()
 
-#UNFINISHED
-@bot.command(pass_context=True)
-async def react(name,ctx):
-	regex = re.compile('[^a-zA-Z0-9 ]')
-	image = regex.sub('', name.strip(',.').lower().strip())
-	img = "images/" + image +".jpg"
-	
-	await bot.send_file(ctx.message.channel, img)
-
 #get PID, for the bot runner
 @bot.command()
 async def pid():
 	await bot.say(str(os.getpid()))
-
-#command to see if a selective process is up or not, it doesn't work but it might if you let it
-@bot.command(pass_context=True)
-async def isup(ctx, process):
-	await bot.say("This command no longer works. Please wait as I unfuck my own ass.")
-	return; #remove these two lines to enable
-	regex = re.compile('[^a-zA-Z0-9 ]')
-	stdin=str(regex.sub('',process.strip(',.').lower())) 
-	def seeIfUp( stdin):
-		output = str(subprocess.getoutput('ps -A'))
-		if stdin in output:
-			return "true"
-		else:
-			return "false"
-		return "error"
-	if process == "minecraft":
-		await bot.say(stdin+" check: ")
-		await bot.say(str(seeIfUp("java")))
-	elif process == "PyBot":
-		await bot.say(stdin+" check: ")
-		await bot.say("what the fuck do you think")
-	else:
-		await bot.say(stdin+" not on or found")
-#unfinished
-@bot.command()
-async def getreactions():
-	files=[]
-	for filenames in os.walk('./images'):
-		for filename in filenames:
-			print(filenames.strip())
-			files.append(filenames.strip())
-	await bot.say(files[1:])
 
 #show the github so people can laugh at my coding skills
 @bot.command()
@@ -258,69 +214,27 @@ async def guessinggame(ctx, guess, difficulty):
 		print("1")
 		await bot.say("You lost. You were off by "+str(abs(int(guess)-number)))
 
-#Senvrs sudo system, lets special boy users do special boy commands
-def isSudoer(person, ctx):
-	print("0")
-	print(str(ctx.message.server.id)+"/sudoers.conf")
-	print("1")
-	if not Path(str(ctx.message.server.id)):
-		os.mkdir(str(ctx.message.server.id))
-	if not Path(str(ctx.message.server.id)+"/sudoers.conf").exists():
-		print("2")
-		open(str(ctx.message.server.id)+"/sudoers.conf","x")
-		print("3")
-	print("4")
-	sudofile=open(str(ctx.message.server.id)+"/sudoers.conf","r")
-	regex = re.compile('[^0-9]')
-	sudoers=sudofile.read().strip().split()
-	sudofile.close
-	print(sudoers)
-	owner=ctx.message.server.owner.id
-	if person == owner:
-		print(str(person)+" is a sudoer. Owner, infact.")
-		return True;
-	elif person in sudoers:
-		print(str(person)+" is a sudoer.")
-		return True;
-	else:
-		print(str(person)+" is not a sudoer.")
-		return False;
-	#await bot.say('ERROR: Something weird happened. Tell Senvr if you arent him. [1]')
-
 #add a user/role to the sudoers file
 @bot.command(pass_context=True)
-async def adduser(ctx, Member : discord.Member):
-	await bot.say("Attempting to adduser to sudoers...")
-	if isSudoer(str(ctx.message.author.id), ctx):
+async def addUser(ctx, Member : discord.Member):
+	if senvrlib.isSudoer(ctx.message.author.id, ctx.message.server.id, ctx.message.server.owner.id):
 		print("1")
-		if isSudoer(str(Member.id),ctx):
-			await bot.send_message(ctx.message.channel,"They're already a sudoer.")
-			print("C")
-			return
-		else:
-				sudofile=open(str(ctx.message.server.id)+"/sudoers.conf","r+")
-				sudofile.write(str(Member.id)+"\n")
-				print("B")
-				regex = re.compile('[^0-9]')
-				sudoers=sudofile.read().strip().split()
-				print(sudoers)
-				await bot.send_message(ctx.message.channel, "OK, added the user. They're a sudoer.")
-				sudofile.close
-				return;
-	else:
-		await bot.send_message(ctx.message.channel, "ERROR: 401")
-		return;
-	print("EOC")
-	#sudofile.close
+		if senvrlib.isSudoer(Member.id, ctx.message.server.id, ctx.message.server.owner.id):
+			await bot.send_message(ctx.message.channel, "They're already a sudoer.")
+			print("1A")
+			return;
+		senvrlib.makesudoer(Member.id, ctx.message.server.id, ctx.message.author.id, ctx.message.server.owner.id)
 
 #reset user data
 @bot.command(pass_context=True)
 async def resetUserData(ctx):
-	if isSudoer(ctx.message.author.id,ctx):
+	if senvrlib.isSudoer(ctx.message.author.id, ctx.message.server.id, ctx.message.server.owner.id):
 		await bot.say("Removing all userdata!")
 		folder = 'userdata/'
 		for files in os.listdir(folder):
 			os.remove(folder+files)
+	else:
+		await bot.say("You lack the permission to do this.")
 
 #display a users GayRate(tm) rating
 @bot.command(pass_context=True)
