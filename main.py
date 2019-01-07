@@ -24,13 +24,13 @@ import urllib.request
 ##############################
 
 #change the prefix here
-prefix = "U$"
+prefix = "$"
 
 #set bot-wise here
 bot = commands.Bot(command_prefix=prefix)
 
 #changable token
-TOKEN="NTI4MzM0MjQyNDY0MjY4MzAz.DwmuZA.keQk4u8o7FBYXmfQj-JbG0vWDH8"
+TOKEN="ree"
 
 #this is what makes the error message go away eventually
 async def status_task():
