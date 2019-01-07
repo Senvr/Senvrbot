@@ -30,7 +30,7 @@ prefix = "U$"
 bot = commands.Bot(command_prefix=prefix)
 
 #changable token
-TOKEN="NTI4MzM0MjQyNDY0MjY4MzAz.DwmuZA.keQk4u8o7FBYXmfQj-JbG0vWDH8"
+TOKEN="NTI4MzM0MjQyNDY0MjY4MzAz.DxRu3Q.Q8XUwL6MnJPP5nd7SWIfx5PRxgM"
 
 #this is what makes the error message go away eventually
 async def status_task():
@@ -59,12 +59,21 @@ async def on_ready():
 
 #REMOVEME
 @bot.command(pass_context=True)
-async def test_poke(ctx, name, var):
+async def poke(ctx, name, var):
 	if senvrlib.isSudoer(ctx.message.author.id, ctx.message.server.id, ctx.message.server.owner.id):
 		await bot.send_message(ctx.message.channel, senvrlib.poke(name,var,str(ctx.message.server.id)))
+		
+@bot.command(pass_context=True)
+async def peek(ctx, name):
+	if senvrlib.isSudoer(ctx.message.author.id, ctx.message.server.id, ctx.message.server.owner.id):
+		await bot.send_message(ctx.message.channel, senvrlib.peek(name, ctx.message.server.id))
+		
 #This is where the bot says stuff like "debian is better" and crap. 
 @bot.event
 async def on_message(msg):
+	if not senvrlib.peek("enablechat",msg.server.id) == "true":
+		await bot.process_commands(msg) 
+		return
 	if msg.author == bot.user or msg.author.bot:
 		return
 	else:
@@ -269,7 +278,7 @@ async def gayrate(ctx, Member : discord.Member):
 #This handles errors. (Moved to bottom of script)
 @bot.event
 async def on_command_error(error, ctx):
-	await bot.send_message(ctx.message.channel,"uh oh spaghetti-o's: @Senvr")
+	await bot.send_message(ctx.message.channel,"uh oh spaghetti-o's")
 	await bot.send_message(ctx.message.channel, "`"+str(error)+"`")
 	print(error)
 	await bot.change_presence(game=discord.Game(name='ERROR:'+str(error)))
