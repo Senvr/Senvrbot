@@ -30,7 +30,7 @@ prefix = "U$"
 bot = commands.Bot(command_prefix=prefix)
 
 #changable token
-TOKEN="ree?"
+TOKEN="NTI4MzM0MjQyNDY0MjY4MzAz.DxTmVA.ZV8780RPS2evsq3g7tBoxn58KeU"
 
 #this is what makes the error message go away eventually
 async def status_task():
@@ -130,10 +130,13 @@ async def ask(ctx):
 		replies=["yes","no","maybe"]
 		await bot.say(random.choice(replies))
 
+
+
 #add a quote to the quotes file
 @bot.command(pass_context=True)
 async def quoteadd(ctx):
 	print(ctx.message.content)
+	print(id)
 	await bot.say("Trying to add...")
 	regex = re.compile('[^a-zA-Z0-9 ,.!?/]')
 	MSG = regex.sub('', str("**'"+ctx.message.content+"'** by "+ctx.message.author.name).replace('$quoteadd ','')).strip()
@@ -143,8 +146,7 @@ async def quoteadd(ctx):
 				else:
 					f = open("quotes.txt","a")
 					f.write(format(MSG)+'\n')
-					ID=file_len("quotes.txt")
-					await bot.say("added, thanks for contribution. your quote displays as: "+MSG+" with id "+str(ID))
+					await bot.say("added, thanks for contribution. your quote displays as: "+MSG+" with id "+str(senvrlib.file_len("quotes.txt")))
 					f.close()
 					#ID system is a WIP
 	else:
@@ -153,10 +155,20 @@ async def quoteadd(ctx):
 
 #read quote command
 @bot.command(pass_context=True)
-async def quote(ctx):
-	embedQuote=discord.Embed(title="A random quote:", description=random.choice(list(open('quotes.txt'))).strip(), color=0x00ffff) #make a fancy embed to show off our skillz
-	await bot.send_message(ctx.message.channel, embed=embedQuote)
-	print(quote)
+async def quote(ctx,id=-1):
+	if id > 0:
+					
+		f=open("quotes.txt","r")
+		lines=f.readlines()
+		print(id)
+		embedQuote=discord.Embed(title="A quote from true intellectuals\n", description=lines[id], color=0x00ffff) #make a fancy embed to show off our skillz
+		await bot.send_message(ctx.message.channel, embed=embedQuote)
+		f.close
+	else:
+		embedQuote=discord.Embed(title="A random quote:", description=random.choice(list(open('quotes.txt'))).strip(), color=0x00ffff) #make a fancy embed to show off our skillz
+		await bot.send_message(ctx.message.channel, embed=embedQuote)
+
+	
 
 #display a random image
 @bot.command(pass_context=True)
@@ -209,7 +221,7 @@ async def github():
 
 #guessinggame, this lets you guess a number based on a difficulty value.
 @bot.command(pass_context = True)
-async def guessinggame(ctx, guess, difficulty):
+async def guessinggame(ctx, guess, difficulty=2):
 	if int(difficulty)  == "" :
 		await bot.say('Difficulty value must be a number! (math: `randint(1,1+difficulty*2)`')
 		return;
