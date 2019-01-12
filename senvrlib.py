@@ -1,4 +1,4 @@
-import os, re
+import os, re, os.path
 from pathlib import Path
 #heck if sudoer
 
@@ -39,23 +39,35 @@ def makesudoer(id, serverid, authorid, owner):
 				sudofile.close
 				return;
 	else:
-		return;
-
+			return;
+#read v ariables that weres et by pone
+def peek(name, serverid):
+	if os.path.isfile(str(serverid)+"/"+name):
+		f=open(str(serverid)+"/"+name,"r")
+		data=f.read()
+		f.close()
+		return data
+	else:
+		return ""
 #change or make a variable
 def poke(name, var, serverid):
-	data=re.sub("[^a-zA-Z0-9 ]","", var.lower().strip())
-	name=re.sub("[^a-zA-Z0-9 ]","", name.lower().strip())
-	print("1")
+	DATA=re.sub("[^a-zA-Z0-9]","", var.lower().strip())
+	NAME=re.sub("[^a-zA-Z0-9]","", name.lower().strip())
 	if not os.path.isdir(str(serverid)):
 		os.mkdir(str(serverid))
-	print("2")
-	if len(data) > 128 or len(data) < 2:
+	if len(DATA) > 128 or len(DATA) < 2:
 		return 1;
-	if len(name) > 16 or len(name) < 2:
+	if len(NAME) > 16 or len(NAME) < 2:
 		return 1;
-	print("3")
-	f=open(serverid+"/"+name,"w")
+	f=open(serverid+"/"+NAME,"w")
 	print("4")
-	f.write(var)
+	f.write(DATA)
 	f.close
 	return 0;
+
+#file length
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
