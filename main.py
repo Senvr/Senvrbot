@@ -30,7 +30,7 @@ prefix = "U$"
 bot = commands.Bot(command_prefix=prefix)
 
 #changable token
-TOKEN="NTEyMDUyNjI1NTA0NDY4OTkz.DxxEbg.ZNBR24urtx22M8zjwlf0uxb9R8E"
+TOKEN=""
 
 #this is what makes the error message go away eventually
 async def status_task():
